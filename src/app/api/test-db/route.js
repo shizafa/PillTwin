@@ -1,8 +1,8 @@
-import { supabase } from "@/lib/supabase";
+import { getSupabase } from "@/lib/supabase";
 
 export async function GET() {
   try {
-    const { count, error } = await supabase
+    const { count, error } = await getSupabase()
       .from("products")
       .select("id", { count: "exact" })
       .limit(1);
