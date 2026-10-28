@@ -1,8 +1,13 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Navbar from "@/components/Navbar";
+import Hero from "@/components/Hero";
+import ScrollStage from "@/components/ScrollStage";
+import HowItWorks from "@/components/HowItWorks";
+import Footer from "@/components/Footer";
 import ResultView from "@/components/ResultView";
-import { LANGUAGES, dirFor, t } from "@/lib/i18n";
+import { dirFor, t } from "@/lib/i18n";
 
 const MAX_WIDTH = 1024;
 const LANG_STORAGE_KEY = "pilltwin-lang";
@@ -132,111 +137,37 @@ export default function Home() {
   const dir = dirFor(lang);
 
   return (
-    <main dir={dir} lang={lang} className="mx-auto w-full max-w-2xl px-4 py-10">
-      <header className="flex items-start justify-between gap-4">
-        <div>
-          <h1 className="text-3xl font-bold text-zinc-900">PillTwin</h1>
-          <p className="mt-1 text-zinc-600">{t(lang, "tagline")}</p>
-        </div>
-        <div className="flex shrink-0 overflow-hidden rounded-lg border border-zinc-300">
-          {LANGUAGES.map((language) => (
-            <button
-              key={language.code}
-              type="button"
-              onClick={() => changeLanguage(language.code)}
-              className={`px-3 py-1.5 text-sm ${
-                lang === language.code
-                  ? "bg-zinc-900 text-white"
-                  : "bg-white text-zinc-700 hover:bg-zinc-50"
-              }`}
-            >
-              {language.label}
-            </button>
-          ))}
-        </div>
-      </header>
+    <div id="top" dir={dir} lang={lang}>
+      <Navbar lang={lang} onChangeLanguage={changeLanguage} />
 
-      <section className="mt-8">
-        <h2 className="text-sm font-semibold uppercase tracking-wide text-zinc-500">
-          {t(lang, "scanHeading")}
-        </h2>
+      <Hero
+        lang={lang}
+        query={query}
+        setQuery={setQuery}
+        onSearch={handleSearch}
+        fileInputRef={fileInputRef}
+        onChooseFile={chooseFile}
+        preview={preview}
+        onScan={handleScan}
+        onClearPhoto={clearPhoto}
+        busy={busy}
+      />
 
-        <input
-          ref={fileInputRef}
-          type="file"
-          accept="image/*"
-          onChange={chooseFile}
-          className="mt-2 block w-full cursor-pointer rounded-lg border border-zinc-300 p-2 text-sm file:mr-3 file:rounded-md file:border-0 file:bg-zinc-900 file:px-3 file:py-2 file:text-white"
-        />
-        <p className="mt-1 text-xs text-zinc-500">{t(lang, "fileHint")}</p>
-
-        {preview ? (
-          <div className="mt-3">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={preview}
-              alt=""
-              className="max-h-56 rounded-lg border border-zinc-200"
-            />
-            <button
-              type="button"
-              onClick={clearPhoto}
-              className="mt-2 text-sm text-zinc-600 underline"
-            >
-              {t(lang, "removePhoto")}
-            </button>
-          </div>
+      <main className="mx-auto w-full max-w-2xl px-4 py-10">
+        {error ? (
+          <p className="rounded-lg border border-red-300 bg-red-50 p-3 text-sm text-red-800">
+            {error}
+          </p>
         ) : null}
 
-        <button
-          type="button"
-          onClick={handleScan}
-          disabled={busy !== "" || !file}
-          className="mt-3 w-full rounded-lg bg-blue-600 px-4 py-2.5 font-medium text-white disabled:bg-zinc-300"
-        >
-          {busy === "scan" ? t(lang, "scanning") : t(lang, "scanButton")}
-        </button>
+        {result ? <ResultView result={result} lang={lang} /> : null}
+      </main>
 
-        {busy === "scan" ? (
-          <p className="mt-2 text-sm text-zinc-600">{t(lang, "scanWait")}</p>
-        ) : null}
-      </section>
+      <ScrollStage lang={lang} />
 
-      <div className="my-8 flex items-center gap-3">
-        <span className="h-px flex-1 bg-zinc-200" />
-        <span className="text-xs uppercase tracking-wide text-zinc-400">{t(lang, "or")}</span>
-        <span className="h-px flex-1 bg-zinc-200" />
-      </div>
+      <HowItWorks lang={lang} />
 
-      <section>
-        <h2 className="text-sm font-semibold uppercase tracking-wide text-zinc-500">
-          {t(lang, "searchHeading")}
-        </h2>
-        <form onSubmit={handleSearch} className="mt-2 flex gap-2">
-          <input
-            type="text"
-            value={query}
-            onChange={(event) => setQuery(event.target.value)}
-            placeholder={t(lang, "searchPlaceholder")}
-            className="flex-1 rounded-lg border border-zinc-300 px-3 py-2.5 text-zinc-900 placeholder:text-zinc-400"
-          />
-          <button
-            type="submit"
-            disabled={busy !== ""}
-            className="rounded-lg bg-zinc-900 px-5 py-2.5 font-medium text-white disabled:bg-zinc-300"
-          >
-            {busy === "search" ? t(lang, "searching") : t(lang, "searchButton")}
-          </button>
-        </form>
-      </section>
-
-      {error ? (
-        <p className="mt-6 rounded-lg border border-red-300 bg-red-50 p-3 text-sm text-red-800">
-          {error}
-        </p>
-      ) : null}
-
-      {result ? <ResultView result={result} lang={lang} /> : null}
-    </main>
+      <Footer lang={lang} onChangeLanguage={changeLanguage} />
+    </div>
   );
 }

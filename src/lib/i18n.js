@@ -7,6 +7,10 @@ const STRINGS = {
   en: {
     tagline: "Find your medicine's twin.",
 
+    navHowItWorks: "How it works",
+    navAbout: "About",
+    navMenu: "Menu",
+
     scanHeading: "Scan your medicine box",
     fileHint: "Choose a photo from your computer, or take one with your phone camera.",
     removePhoto: "Remove photo",
@@ -17,9 +21,21 @@ const STRINGS = {
     or: "or",
 
     searchHeading: "Search by name",
-    searchPlaceholder: "e.g. Panadol or Paracetamol",
+    searchPlaceholder: "Search your medicine name",
     searchButton: "Search",
     searching: "Searching…",
+    heroHelper: "Type the name or scan the box",
+
+    scrollStageText:
+      "Find the same medicine for less. Scan any box and see cheaper alternatives with the same salt.",
+
+    step1Heading: "Search or scan",
+    step1Text: "Type the medicine name or scan the box with your camera.",
+    step2Heading: "See alternatives",
+    step2Text: "We show other medicines with the same salt, with prices side by side.",
+    step3Heading: "Check and decide",
+    step3Text:
+      "See whether the medicine is registered and confirm with your pharmacist or doctor.",
 
     whatWeRead: "What we read from your box",
     yourMedicine: "Your medicine",
@@ -47,10 +63,20 @@ const STRINGS = {
 
     disclaimer: "Always ask your doctor or pharmacist before switching medicines.",
     dataNote: "Data from DRAP's provisional registry; may contain errors.",
+
+    footerDescription: "Find your medicine's twin — compare registered alternatives with the same salt.",
+    footerContact: "Contact",
+    footerSafetyNote:
+      "PillTwin is for information only. Always confirm with a pharmacist or doctor before changing any medicine.",
+    footerRights: "All rights reserved.",
   },
 
   ur: {
     tagline: "اپنی دوا کا جُڑواں تلاش کریں۔",
+
+    navHowItWorks: "یہ کیسے کام کرتا ہے",
+    navAbout: "تعارف",
+    navMenu: "مینیو",
 
     scanHeading: "اپنی دوا کا ڈبہ اسکین کریں",
     fileHint: "اپنے کمپیوٹر سے تصویر منتخب کریں، یا فون کے کیمرے سے تصویر لیں۔",
@@ -62,9 +88,20 @@ const STRINGS = {
     or: "یا",
 
     searchHeading: "نام سے تلاش کریں",
-    searchPlaceholder: "مثلاً پیناڈول یا پیراسیٹامول",
+    searchPlaceholder: "اپنی دوا کا نام تلاش کریں",
     searchButton: "تلاش کریں",
     searching: "تلاش جاری ہے…",
+    heroHelper: "نام لکھیں یا ڈبے کو اسکین کریں",
+
+    scrollStageText:
+      "وہی دوا، کم قیمت میں تلاش کریں۔ کسی بھی ڈبے کو اسکین کریں اور وہی سالٹ رکھنے والے سستے متبادل دیکھیں۔",
+
+    step1Heading: "تلاش کریں یا اسکین کریں",
+    step1Text: "دوا کا نام لکھیں یا اپنے کیمرے سے ڈبہ اسکین کریں۔",
+    step2Heading: "متبادل دیکھیں",
+    step2Text: "ہم وہی سالٹ رکھنے والی دیگر ادویات قیمتوں کے ساتھ دکھاتے ہیں۔",
+    step3Heading: "تصدیق کریں اور فیصلہ کریں",
+    step3Text: "دیکھیں کہ دوا رجسٹرڈ ہے یا نہیں اور اپنے فارماسسٹ یا ڈاکٹر سے تصدیق کریں۔",
 
     whatWeRead: "ہم نے آپ کے ڈبے سے کیا پڑھا",
     yourMedicine: "آپ کی دوا",
@@ -91,6 +128,12 @@ const STRINGS = {
 
     disclaimer: "دوا تبدیل کرنے سے پہلے ہمیشہ اپنے ڈاکٹر یا فارماسسٹ سے مشورہ کریں۔",
     dataNote: "معلومات ڈریپ کی عارضی رجسٹری سے لی گئی ہیں؛ ان میں غلطیاں ہو سکتی ہیں۔",
+
+    footerDescription: "اپنی دوا کا جُڑواں تلاش کریں — وہی سالٹ رکھنے والے رجسٹرڈ متبادل موازنہ کریں۔",
+    footerContact: "رابطہ",
+    footerSafetyNote:
+      "PillTwin صرف معلوماتی مقاصد کے لیے ہے۔ کوئی بھی دوا تبدیل کرنے سے پہلے ہمیشہ فارماسسٹ یا ڈاکٹر سے تصدیق کریں۔",
+    footerRights: "جملہ حقوق محفوظ ہیں۔",
   },
 };
 

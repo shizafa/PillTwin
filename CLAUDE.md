@@ -1,3 +1,7 @@
+# CLAUDE.md
+
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+
 # PillTwin
 
 ## What this project is
@@ -157,3 +161,38 @@ scripts/
 - Don't put secrets in client code or commit `.env.local`.
 - Don't spend time on fancy UI; basic is fine for now.
 - Don't move to the next build step without my okay.
+
+## Commands
+```
+npm run dev            # start dev server (Turbopack), http://localhost:3000
+npm run build          # production build
+npm start              # run the production build
+npm run lint           # eslint (eslint-config-next, flat config)
+```
+There is no test suite / test runner in this repo.
+
+Scraper scripts (run with Node directly, not through npm):
+```
+node scripts/drap-scraper.js            # bulk-scrape all GENERICS → drap_products.csv (~1.5s delay/request, slow)
+node scripts/drap-scraper.js --probe "Paracetamol"   # one generic only, dumps drap-probe.json for inspection
+node scripts/drap-diagnose.js           # DNS/TCP/TLS connectivity check against eapp.dra.gov.pk, no DB/API needed
+```
+
+## Current implementation state
+As of the last commit, build order steps 1–4, 6, and 9 are done; step 5 (live DRAP fetch wired into search/scan) is **not yet wired in** — `lib/drap.js` currently has the fetch/parse helpers used only by `scripts/drap-scraper.js`, and `lib/medicine.js`'s `findProductFromPack` / `/api/search` only query Supabase. `buildWarnings` already accepts a `liveLookupUnavailable` flag and `i18n.js` already has the `LIVE_LOOKUP_UNAVAILABLE` string, anticipating that wiring. Don't assume live DRAP lookup works end-to-end until it's actually plugged in.
+
+### Module map
+- `src/lib/saltKey.js` — pure string helpers shared by the scraper and the live fetch: `cleanText`, `splitIngredients`, `normalizeStrength`, `normalizeDosageForm`, `makeSaltKey`, `extractStrength`, `extractPackSize`. Change matching behavior here, not in callers.
+- `src/lib/drap.js` — DRAP HTTP calls (`findGenerics`, `listProductsByGeneric`, `fetchProductDetailHtml`), `parseProductDetailHtml` (HTML label/value scraping via `DETAIL_LABELS`), and `buildProductRecord` (list item + detail fields → a `products` row shape). 8s timeout via `AbortController`, used by both the scraper and (once wired) the live lookup path.
+- `src/lib/medicine.js` — Supabase-backed product lookup/matching: `findProductByRegNo`, `searchProducts`, `pickBestMatch` (scored brand/generic/strength match), `findAlternatives` (same `salt_key` + `dosage_form`), `findProductFromPack`, `buildWarnings`. Also owns the `DISCLAIMER` / `DATA_NOTE` constants.
+- `src/lib/gemma.js` — `readPack(base64Image, mimeType)` calls Gemma (model id in `GEMMA_MODEL`), retries up to 3x on transient errors (429/500/503), extracts the first `{...}` JSON blob from the response text, normalizes fields with `normalizePack` (treats words like "null"/"n/a"/"unknown" as absent).
+- `src/lib/supabase.js` — `getSupabase()` lazily creates and caches a service-role client. Server-only; never import from a client component.
+- `src/lib/i18n.js` — `t(lang, key)` for UI strings, `warningText(lang, warning)` for warning codes returned by the API, `dirFor(lang)` for `ltr`/`rtl`. Add new user-facing strings/warning codes to both `en` and `ur` in the same edit.
+- `src/app/api/search/route.js`, `src/app/api/scan/route.js`, `src/app/api/test-db/route.js` — thin route handlers; all real logic lives in `lib/`.
+- `src/app/page.js` — single-page client component (search form + scan upload + language toggle); shrinks images client-side to 1024px wide before POSTing to `/api/scan`. `src/components/ResultView.js` renders the API response (product, alternatives, warnings).
+- `fixtures/gemma-pack.json`, `fixtures/test-box.png` — a saved real Gemma response + sample box photo, for working on downstream parts without burning Gemma free-tier rate limits.
+
+### Conventions worth preserving
+- Import alias `@/*` → `src/*` (see `jsconfig.json`); route handlers and components use it, `lib/` files use relative imports among themselves.
+- `salt_key`, strength, and dosage-form normalization must only ever happen through the shared helpers in `saltKey.js` — there is deliberately one implementation, used by the scraper, the live fetch, and (via `medicine.js`) the API.
+- API routes never throw raw errors to the client: every route wraps its body in try/catch and returns a plain-English `{ error }` JSON message.
