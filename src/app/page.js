@@ -7,7 +7,8 @@ import ScrollStage from "@/components/ScrollStage";
 import HowItWorks from "@/components/HowItWorks";
 import Footer from "@/components/Footer";
 import ResultView from "@/components/ResultView";
-import { dirFor, t } from "@/lib/i18n";
+import ResultSkeleton from "@/components/ResultSkeleton";
+import { LANGUAGES, dirFor, t } from "@/lib/i18n";
 
 const MAX_WIDTH = 1024;
 const LANG_STORAGE_KEY = "pilltwin-lang";
@@ -160,14 +161,34 @@ export default function Home() {
           </p>
         ) : null}
 
-        {result ? <ResultView result={result} lang={lang} /> : null}
+        {(busy === "search" || busy === "scan") && !result ? <ResultSkeleton lang={lang} /> : null}
+
+        {result ? (
+          <ResultView
+            result={result}
+            lang={lang}
+            query={query}
+            setQuery={setQuery}
+            onSearch={handleSearch}
+            busy={busy}
+            fileInputRef={fileInputRef}
+          />
+        ) : null}
       </main>
 
       <ScrollStage lang={lang} />
 
       <HowItWorks lang={lang} />
 
-      <Footer lang={lang} onChangeLanguage={changeLanguage} />
+      <Footer
+        lang={lang}
+        onChangeLanguage={changeLanguage}
+        query={query}
+        setQuery={setQuery}
+        onSearch={handleSearch}
+        busy={busy}
+        fileInputRef={fileInputRef}
+      />
     </div>
   );
 }

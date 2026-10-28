@@ -119,6 +119,57 @@ Each step: a short heading (max 5 words) and one or two plain sentences. No tech
 - Text contrast meets WCAG AA, including the faint-to-full text reveal at its end state.
 - Urdu support: use a proper Urdu font and design the layout to flip to right-to-left without breaking.
 - Camera permission: show a clear message if the user denies it, and offer an upload-photo fallback.
+## Search results view (after the user searches or scans)
+
+This is what the user sees once they type a medicine name and press Enter, or scan a box with the camera. It can be a separate `/results` page or a view that replaces the hero. Keep the same minimal style, with a single column that is easy to read.
+
+**Flow**
+1. User searches or scans from the hero search bar.
+2. Short loading state (a calm skeleton or a small pill animation, never a blank screen).
+3. Results appear. The search bar stays at the top so the user can search again.
+
+**Camera scan step**
+- After scanning, show the detected medicine name in an editable field with the message "Is this your medicine?" and two buttons: "Yes, search" and "Edit name".
+- If the scan fails, say so plainly and offer "Try again" and "Type the name instead".
+
+**Result layout (top to bottom)**
+
+1. **Searched medicine card** (the medicine the user looked up)
+   - Name, strength (for example 500 mg), form (tablet, syrup, injection), manufacturer.
+   - **Active salt / composition** shown clearly, because this is what the alternatives are matched on.
+   - Price.
+   - **Registration status badge:** "Registered" (green) or "Not found in DRAP list" (amber/red) with a short explanation. Never show a status without a source or date.
+2. **Cheaper alternatives (same salt)**
+   - Heading: "Same medicine, lower price".
+   - List or grid of cards sorted by **lowest price first**.
+   - Each card shows: name, manufacturer, strength, form, price, and a **savings badge** (for example "Save Rs. 120" or "40% cheaper").
+   - Each card also shows the registration badge.
+   - Show a "Same salt, same strength" tag only when both actually match. If the strength or form differs, label it "Different strength" so the user is not misled.
+3. **Other options (optional)**
+   - A collapsed section, "Same salt, different strength", closed by default.
+4. **Safety note** (always visible, calm tone)
+   - "This is for information only. Confirm with your pharmacist or doctor before switching any medicine."
+
+**Controls**
+- Simple sort: "Lowest price" (default), "Most popular".
+- One filter chip row at most: strength and form (tablet, syrup, etc.). Hidden on small screens behind a single "Filter" button.
+- No complex filters.
+
+**Card behavior**
+- Cards are tappable and open a detail panel (bottom sheet on mobile, side panel on desktop) with full composition, pack size, price per unit, manufacturer, registration details and a short "what it is used for" line if available.
+- Subtle hover lift on desktop. No heavy animation.
+
+**Empty and error states**
+- **Not found:** "We could not find this medicine. Check the spelling or try scanning the box." Show close name suggestions if available.
+- **No alternatives:** "No cheaper option with the same salt was found." Still show the searched medicine card.
+- **Network error:** "Something went wrong. Please try again." with a retry button.
+
+**Mobile layout**
+- Single column. Searched medicine card is sticky or pinned at the top, and alternatives scroll below it.
+- Large price text and a clear savings badge so the cheaper option is obvious at a glance.
+
+**Language**
+- All labels, badges and messages are available in Urdu with right-to-left layout. Medicine names and salts stay in Latin script, so keep them readable inside RTL text.
 
 ## Build checklist
 

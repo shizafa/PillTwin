@@ -5,7 +5,7 @@ export const DISCLAIMER = "Always ask your doctor or pharmacist before switching
 export const DATA_NOTE = "Data from DRAP's provisional registry; may contain errors.";
 
 const PRODUCT_COLUMNS =
-  "id, reg_no, brand, generic, strength, dosage_form, salt_key, manufacturer, composition, status, pack_size, mrp, price_per_unit, source";
+  "id, reg_no, brand, generic, strength, dosage_form, salt_key, manufacturer, composition, status, pack_size, mrp, price_per_unit, source, fetched_at";
 
 export async function findProductByRegNo(regNo) {
   const value = cleanText(regNo);

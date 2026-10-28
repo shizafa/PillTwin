@@ -19,9 +19,6 @@ function easeInOut(t) {
 const ENTER_END = 0.2;
 const ORBIT_START = 0.2;
 const ORBIT_END = 0.7;
-// Cards should be visible almost as soon as the section pins, not fade in
-// gradually over the whole enter phase, so there is no text-only dead zone.
-const OPACITY_IN_END = 0.04;
 
 function frameAt(progress, cfg) {
   const { enter, finalScatter, ringRadiusX, ringRadiusY, baseAngle, spinTurns } = cfg;
@@ -55,9 +52,11 @@ function frameAt(progress, cfg) {
   const scale = enterScale * (1 - scatterT) + finalScatter.scale * scatterT;
   // Cards stay upright through the ring; only the hand-defined scatter tilt applies.
   const rotate = finalScatter.rotate * scatterT;
-  const enterOpacity = mapRange(progress, 0, OPACITY_IN_END, 0, 1);
+  // Fully visible the instant the section pins — no fade-in delay, so there
+  // is never a blank moment between the hero and the cards appearing.
+  const opacity = 1;
 
-  return { x, y, rotate, scale, opacity: clamp01(enterOpacity) };
+  return { x, y, rotate, scale, opacity: clamp01(opacity) };
 }
 
 export default function OrbitCard({ card, index, total, scrollYProgress }) {

@@ -6,23 +6,10 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import OrbitCard from "./OrbitCard";
 import { DESKTOP_CARDS, MOBILE_CARDS } from "./scrollStageCards";
 import { t } from "@/lib/i18n";
+import { useMediaQuery } from "@/lib/useMediaQuery";
 
 const TEXT_START = 0.1;
 const TEXT_END = 0.6;
-
-function useMediaQuery(query) {
-  const [matches, setMatches] = useState(false);
-
-  useEffect(() => {
-    const mql = window.matchMedia(query);
-    const update = () => setMatches(mql.matches);
-    update();
-    mql.addEventListener("change", update);
-    return () => mql.removeEventListener("change", update);
-  }, [query]);
-
-  return matches;
-}
 
 export default function ScrollStage({ lang }) {
   // The pinned section stays mounted at all times (see below) so this ref is

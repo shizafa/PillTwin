@@ -51,7 +51,7 @@ export default function Hero({
         <div className="relative z-10 mx-auto mt-auto w-full max-w-xl">
           <form
             onSubmit={onSearch}
-            className="flex h-14 items-center rounded-full border border-zinc-200 bg-white pl-5 pr-2 shadow-lg transition-colors focus-within:border-blue-500"
+            className="flex h-14 items-center rounded-full border border-zinc-200 bg-white ps-5 pe-2 shadow-lg transition-colors focus-within:border-blue-500"
           >
             <input
               type="text"
@@ -73,7 +73,7 @@ export default function Hero({
               type="submit"
               disabled={busy !== ""}
               aria-label={t(lang, "searchButton")}
-              className="ml-1 flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-blue-600 text-white disabled:bg-zinc-300"
+              className="ms-1 flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-blue-600 text-white disabled:bg-zinc-300"
             >
               <SearchIcon />
             </button>

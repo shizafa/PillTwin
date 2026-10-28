@@ -37,13 +37,37 @@ const STRINGS = {
     step3Text:
       "See whether the medicine is registered and confirm with your pharmacist or doctor.",
 
+    exampleLabel: "Example",
+    confirmNote: "Confirm with your pharmacist or doctor.",
+    goToStep: "Go to step {n}",
+
     whatWeRead: "What we read from your box",
     yourMedicine: "Your medicine",
+    activeSalt: "Active salt / composition",
+    contains: "Contains",
     sameSalt: "Same salt, same strength",
+    sectionAlternatives: "Same medicine, other brands",
+
+    badgeRegistered: "Registered",
+    badgeRegisteredExplain: "Verified Active in DRAP's registry",
+    badgeNotRegistered: "Not registered",
+    badgeNotRegisteredExplain:
+      'DRAP lists this registration as "{status}", not Active. Verify with your pharmacist.',
+    badgeNotVerified: "Not verified",
+    badgeNotVerifiedExplain:
+      "We could not verify this in the DRAP list. Please check with your pharmacist.",
+    sourceDrap: "Source: DRAP registry",
+    sourceManual: "Source: manual entry",
+    checkedOn: "checked",
+
     noAlternatives:
       "We could not find any other medicine with the same salt and strength in our records.",
     priceNotAvailable: "Price not available",
+    priceNotListed: "Price not listed",
+    pricesHelperNote: "Prices are not available yet for these medicines.",
+    savingsBadge: "Save Rs. {amount}",
     perUnit: "per unit",
+    loadingResults: "Loading results…",
 
     brand: "Brand",
     generic: "Generic",
@@ -63,6 +87,9 @@ const STRINGS = {
 
     disclaimer: "Always ask your doctor or pharmacist before switching medicines.",
     dataNote: "Data from DRAP's provisional registry; may contain errors.",
+
+    footerCtaSubtext: "Search by name or scan the box to see cheaper medicines with the same salt.",
+    footerLinksLabel: "Footer",
 
     footerDescription: "Find your medicine's twin — compare registered alternatives with the same salt.",
     footerContact: "Contact",
@@ -103,12 +130,35 @@ const STRINGS = {
     step3Heading: "تصدیق کریں اور فیصلہ کریں",
     step3Text: "دیکھیں کہ دوا رجسٹرڈ ہے یا نہیں اور اپنے فارماسسٹ یا ڈاکٹر سے تصدیق کریں۔",
 
+    exampleLabel: "مثال",
+    confirmNote: "اپنے فارماسسٹ یا ڈاکٹر سے تصدیق کریں۔",
+    goToStep: "مرحلہ {n} پر جائیں",
+
     whatWeRead: "ہم نے آپ کے ڈبے سے کیا پڑھا",
     yourMedicine: "آپ کی دوا",
+    activeSalt: "فعال سالٹ / اجزاء",
+    contains: "شامل ہے",
     sameSalt: "وہی سالٹ، وہی طاقت",
+    sectionAlternatives: "وہی دوا، دیگر برانڈز",
+
+    badgeRegistered: "رجسٹرڈ",
+    badgeRegisteredExplain: "ڈریپ کی رجسٹری میں ایکٹو کے طور پر تصدیق شدہ",
+    badgeNotRegistered: "رجسٹرڈ نہیں",
+    badgeNotRegisteredExplain:
+      "ڈریپ کے مطابق اس رجسٹریشن کی حالت “{status}” ہے، ایکٹو نہیں۔ اپنے فارماسسٹ سے تصدیق کریں۔",
+    badgeNotVerified: "تصدیق نہیں ہو سکی",
+    badgeNotVerifiedExplain: "ہم اسے ڈریپ کی فہرست میں تصدیق نہیں کر سکے۔ براہِ کرم اپنے فارماسسٹ سے چیک کریں۔",
+    sourceDrap: "ماخذ: ڈریپ رجسٹری",
+    sourceManual: "ماخذ: دستی اندراج",
+    checkedOn: "تاریخِ تصدیق",
+
     noAlternatives: "ہمارے ریکارڈ میں اسی سالٹ اور طاقت والی کوئی دوسری دوا نہیں ملی۔",
     priceNotAvailable: "قیمت دستیاب نہیں",
+    priceNotListed: "قیمت درج نہیں",
+    pricesHelperNote: "ان ادویات کے لیے ابھی قیمتیں دستیاب نہیں ہیں۔",
+    savingsBadge: "Rs. {amount} کی بچت",
     perUnit: "فی یونٹ",
+    loadingResults: "نتائج لوڈ ہو رہے ہیں…",
 
     brand: "برانڈ",
     generic: "جنرک",
@@ -128,6 +178,9 @@ const STRINGS = {
 
     disclaimer: "دوا تبدیل کرنے سے پہلے ہمیشہ اپنے ڈاکٹر یا فارماسسٹ سے مشورہ کریں۔",
     dataNote: "معلومات ڈریپ کی عارضی رجسٹری سے لی گئی ہیں؛ ان میں غلطیاں ہو سکتی ہیں۔",
+
+    footerCtaSubtext: "نام سے تلاش کریں یا ڈبہ اسکین کریں تاکہ وہی سالٹ رکھنے والی سستی ادویات دیکھ سکیں۔",
+    footerLinksLabel: "فوٹر",
 
     footerDescription: "اپنی دوا کا جُڑواں تلاش کریں — وہی سالٹ رکھنے والے رجسٹرڈ متبادل موازنہ کریں۔",
     footerContact: "رابطہ",

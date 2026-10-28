@@ -1,40 +1,13 @@
+import AlternativeCard from "./AlternativeCard";
+import SearchedMedicineCard from "./SearchedMedicineCard";
+import StickySearchBar from "./StickySearchBar";
 import { t, warningText } from "@/lib/i18n";
+import { BODY_FONT, HEADING_FONT } from "./resultsViewTheme";
 
-function formatPrice(product, lang) {
-  if (product.mrp === null || product.mrp === undefined) return t(lang, "priceNotAvailable");
-  const perUnit = product.price_per_unit
-    ? ` (Rs. ${Number(product.price_per_unit).toFixed(2)} ${t(lang, "perUnit")})`
-    : "";
-  return `Rs. ${Number(product.mrp).toFixed(2)}${perUnit}`;
-}
-
-function ProductCard({ product, highlight, lang }) {
-  return (
-    <div
-      className={`rounded-lg border p-4 ${
-        highlight ? "border-blue-600 bg-blue-50" : "border-zinc-200 bg-white"
-      }`}
-    >
-      <div className="flex flex-wrap items-baseline justify-between gap-2">
-        <h3 className="text-lg font-semibold text-zinc-900">{product.brand}</h3>
-        <span className="text-sm text-zinc-700">{formatPrice(product, lang)}</span>
-      </div>
-      <p className="mt-1 text-sm text-zinc-600">
-        {product.generic}
-        {product.strength ? ` · ${product.strength}` : ""}
-        {product.dosage_form ? ` · ${product.dosage_form}` : ""}
-      </p>
-      {product.manufacturer ? (
-        <p className="mt-1 text-sm text-zinc-500">{product.manufacturer}</p>
-      ) : null}
-      {product.reg_no ? (
-        <p className="mt-1 text-xs text-zinc-400">
-          {t(lang, "regNo")} {product.reg_no}
-        </p>
-      ) : null}
-    </div>
-  );
-}
+// REGISTRATION_NOT_FOUND / STATUS_NOT_ACTIVE are now communicated calmly by
+// RegistrationBadge on the medicine card itself, so they're not repeated
+// here as a second, more alarming banner.
+const BANNER_WARNING_CODES = new Set(["PRODUCT_NOT_FOUND", "LIVE_LOOKUP_UNAVAILABLE"]);
 
 function PackDetails({ pack, lang }) {
   const rows = [
@@ -52,9 +25,9 @@ function PackDetails({ pack, lang }) {
   if (rows.length === 0) return null;
 
   return (
-    <div className="rounded-lg border border-zinc-200 bg-zinc-50 p-4">
-      <h2 className="text-sm font-semibold text-zinc-700">{t(lang, "whatWeRead")}</h2>
-      <dl className="mt-2 grid grid-cols-2 gap-x-4 gap-y-1 text-sm sm:grid-cols-3">
+    <div className={`rounded-2xl bg-zinc-50 p-5 ${BODY_FONT}`}>
+      <h2 className={`text-sm font-semibold text-zinc-700 ${HEADING_FONT}`}>{t(lang, "whatWeRead")}</h2>
+      <dl className="mt-3 grid grid-cols-2 gap-x-4 gap-y-2 text-sm sm:grid-cols-3">
         {rows.map(([key, value]) => (
           <div key={key}>
             <dt className="text-xs text-zinc-500">{t(lang, key)}</dt>
@@ -66,57 +39,80 @@ function PackDetails({ pack, lang }) {
   );
 }
 
-export default function ResultView({ result, lang }) {
+export default function ResultView({ result, lang, query, setQuery, onSearch, busy, fileInputRef }) {
   const { pack, product, alternatives = [], warnings = [] } = result;
+  const bannerWarnings = warnings.filter((warning) => BANNER_WARNING_CODES.has(warning.code));
+  const anyPriceMissing = alternatives.some(
+    (alternative) => alternative.mrp === null || alternative.mrp === undefined
+  );
 
   return (
-    <div className="mt-8 space-y-6">
-      {pack ? <PackDetails pack={pack} lang={lang} /> : null}
+    <div className={BODY_FONT}>
+      <StickySearchBar
+        lang={lang}
+        query={query}
+        setQuery={setQuery}
+        onSearch={onSearch}
+        busy={busy}
+        fileInputRef={fileInputRef}
+      />
 
-      {warnings.length > 0 ? (
-        <div className="space-y-2">
-          {warnings.map((warning) => (
-            <p
-              key={warning.code}
-              className="rounded-lg border border-amber-300 bg-amber-50 p-3 text-sm text-amber-900"
-            >
-              {warningText(lang, warning)}
-            </p>
-          ))}
-        </div>
-      ) : null}
+      <div className="mt-6 space-y-6">
+        {pack ? <PackDetails pack={pack} lang={lang} /> : null}
 
-      {product ? (
-        <>
-          <section>
-            <h2 className="mb-2 text-sm font-semibold uppercase tracking-wide text-zinc-500">
-              {t(lang, "yourMedicine")}
-            </h2>
-            <ProductCard product={product} highlight lang={lang} />
-          </section>
+        {bannerWarnings.length > 0 ? (
+          <div className="space-y-2">
+            {bannerWarnings.map((warning) => (
+              <p key={warning.code} className="rounded-2xl bg-sky-50 p-4 text-sm text-sky-900">
+                {warningText(lang, warning)}
+              </p>
+            ))}
+          </div>
+        ) : null}
 
-          <section>
-            <h2 className="mb-2 text-sm font-semibold uppercase tracking-wide text-zinc-500">
-              {t(lang, "sameSalt")}
-              {alternatives.length > 0 ? ` (${alternatives.length})` : ""}
-            </h2>
-            {alternatives.length > 0 ? (
-              <div className="space-y-2">
-                {alternatives.map((alternative) => (
-                  <ProductCard key={alternative.id} product={alternative} lang={lang} />
-                ))}
-              </div>
-            ) : (
-              <p className="text-sm text-zinc-600">{t(lang, "noAlternatives")}</p>
-            )}
-          </section>
-        </>
-      ) : null}
+        {product ? (
+          <>
+            <section>
+              <h2 className={`mb-3 text-sm font-semibold uppercase tracking-wide text-zinc-500 ${HEADING_FONT}`}>
+                {t(lang, "yourMedicine")}
+              </h2>
+              <SearchedMedicineCard product={product} lang={lang} />
+            </section>
 
-      <p className="rounded-lg bg-zinc-100 p-3 text-sm font-medium text-zinc-800">
-        {t(lang, "disclaimer")}
-      </p>
-      <p className="text-xs text-zinc-500">{t(lang, "dataNote")}</p>
+            <section>
+              <h2 className={`mb-3 text-xl font-bold text-zinc-900 ${HEADING_FONT}`}>
+                {t(lang, "sectionAlternatives")}
+                {alternatives.length > 0 ? ` (${alternatives.length})` : ""}
+              </h2>
+
+              {alternatives.length > 0 ? (
+                <div className="space-y-3">
+                  {anyPriceMissing ? (
+                    <p className="text-sm text-zinc-500">{t(lang, "pricesHelperNote")}</p>
+                  ) : null}
+                  {alternatives.map((alternative) => (
+                    <AlternativeCard
+                      key={alternative.id}
+                      product={alternative}
+                      searchedProduct={product}
+                      lang={lang}
+                    />
+                  ))}
+                </div>
+              ) : (
+                <div className="rounded-2xl bg-zinc-50 p-5 text-sm text-zinc-600">
+                  {t(lang, "noAlternatives")}
+                </div>
+              )}
+            </section>
+          </>
+        ) : null}
+
+        <p className="rounded-2xl bg-zinc-100 p-4 text-sm font-medium text-zinc-800">
+          {t(lang, "disclaimer")}
+        </p>
+        <p className="text-xs text-zinc-500">{t(lang, "dataNote")}</p>
+      </div>
     </div>
   );
 }
