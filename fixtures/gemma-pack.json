@@ -1,0 +1,11 @@
+{
+  "brand": "PANADOL",
+  "generic": "Paracetamol",
+  "strength": "500mg",
+  "dosage_form": "tablet",
+  "reg_no": "012345",
+  "mrp": 150,
+  "pack_size": 20,
+  "expiry": "06/2027",
+  "batch": "AB1234"
+}

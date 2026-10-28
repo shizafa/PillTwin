@@ -88,6 +88,21 @@ export async function findAlternatives(product) {
   return data ?? [];
 }
 
+export async function findProductFromPack(pack) {
+  if (pack?.reg_no) {
+    const byRegNo = await findProductByRegNo(pack.reg_no);
+    if (byRegNo) return byRegNo;
+  }
+
+  for (const name of [pack?.brand, pack?.generic]) {
+    if (!name) continue;
+    const match = pickBestMatch(await searchProducts(name), name, pack?.strength);
+    if (match) return match;
+  }
+
+  return null;
+}
+
 export function buildWarnings({ product, regNo, liveLookupUnavailable = false } = {}) {
   const warnings = [];
 
