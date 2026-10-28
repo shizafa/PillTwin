@@ -25,7 +25,7 @@ Tagline: *Find your medicine's twin.*
 - **Next.js (App Router), JavaScript only — no TypeScript.**
 - **Tailwind CSS** for styling. Keep the UI basic and clean for now; I will redesign the frontend later, so don't spend time on visual polish.
 - **Supabase** (Postgres) as the database. I will create the Supabase project myself; when you need it, tell me exactly what to create and which keys to put in `.env.local`.
-- **Gemma via Google AI Studio API** (`@google/genai` package). Check the exact Gemma model id available in AI Studio (look for `gemma-3-27b-it` or the newest Gemma vision model) and keep it in one constant.
+- **Gemma via Google AI Studio API** (`@google/genai` package). Model id lives in one constant in `lib/gemma.js`: **`gemma-4-26b-a4b-it`**. Verified 28 Oct 2026: `gemma-3-27b-it` no longer exists (404), and the other available model, `gemma-4-31b-it`, fails with a 500 on roughly 3 of 4 image requests, so do not use it. Image requests still fail transiently, so `readPack` retries.
 - **No login / no accounts.** The app is fully open.
 
 ## Environment variables (`.env.local`, never commit)

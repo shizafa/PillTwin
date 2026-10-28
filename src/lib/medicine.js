@@ -117,6 +117,7 @@ export function buildWarnings({ product, regNo, liveLookupUnavailable = false } 
     warnings.push({
       code: "REGISTRATION_NOT_FOUND",
       message: `Registration number ${cleanText(regNo)} was not found in DRAP's registry. Please verify this pack with your pharmacist.`,
+      params: { regNo: cleanText(regNo) },
     });
   }
 
@@ -125,6 +126,7 @@ export function buildWarnings({ product, regNo, liveLookupUnavailable = false } 
     warnings.push({
       code: "STATUS_NOT_ACTIVE",
       message: `DRAP lists this medicine's registration as "${status}", not Active. Please verify with your pharmacist.`,
+      params: { status },
     });
   }
 
