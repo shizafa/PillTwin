@@ -1,8 +1,13 @@
 "use client";
 
 import SearchPill from "./SearchPill";
-import { LANGUAGES, t } from "@/lib/i18n";
+import LanguageToggle from "./LanguageToggle";
+import { t } from "@/lib/i18n";
+import { CARD_COLORS } from "./cardColors";
 import { BODY_FONT, HEADING_FONT } from "./resultsViewTheme";
+
+const CTA_COLOR = CARD_COLORS[1]; // Electric blue
+const SAFETY_COLOR = CARD_COLORS[11]; // Bright teal
 
 function ShieldIcon({ className }) {
   return (
@@ -30,42 +35,34 @@ export default function Footer({ lang, onChangeLanguage, query, setQuery, onSear
   return (
     <footer className={`relative overflow-hidden bg-zinc-50 ${BODY_FONT}`}>
       <div className="mx-auto flex max-w-7xl justify-end px-4 pt-6 sm:px-6">
-        <div className="flex overflow-hidden rounded-full border border-zinc-300 bg-white">
-          {LANGUAGES.map((language) => (
-            <button
-              key={language.code}
-              type="button"
-              onClick={() => onChangeLanguage(language.code)}
-              className={`px-3 py-1.5 text-xs font-semibold transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600 ${
-                lang === language.code ? "bg-teal-700 text-white" : "text-zinc-600 hover:bg-zinc-100"
-              }`}
-            >
-              {language.label}
-            </button>
-          ))}
-        </div>
+        <LanguageToggle lang={lang} onChange={onChangeLanguage} />
       </div>
 
-      <div className="mx-auto max-w-3xl px-4 pb-14 pt-6 text-center sm:px-6">
-        <h2 className={`text-3xl font-bold text-zinc-900 sm:text-4xl ${HEADING_FONT}`}>{t(lang, "tagline")}</h2>
-        <p className="mt-3 text-zinc-600">{t(lang, "footerCtaSubtext")}</p>
-        <div className="mt-6">
-          <SearchPill
-            lang={lang}
-            query={query}
-            setQuery={setQuery}
-            onSearch={onSearch}
-            busy={busy}
-            fileInputRef={fileInputRef}
-            size="lg"
-            className="mx-auto max-w-xl"
-          />
+      <div className="mx-auto max-w-5xl px-4 pb-14 pt-6 sm:px-6">
+        <div
+          style={{ backgroundColor: CTA_COLOR.bg, color: CTA_COLOR.text }}
+          className="rounded-3xl px-6 py-12 text-center shadow-[0_8px_16px_rgba(0,0,0,0.15),0_24px_48px_rgba(0,0,0,0.18)] sm:px-10"
+        >
+          <h2 className={`text-3xl font-bold sm:text-4xl ${HEADING_FONT}`}>{t(lang, "tagline")}</h2>
+          <p className="mt-3 opacity-90">{t(lang, "footerCtaSubtext")}</p>
+          <div className="mt-6">
+            <SearchPill
+              lang={lang}
+              query={query}
+              setQuery={setQuery}
+              onSearch={onSearch}
+              busy={busy}
+              fileInputRef={fileInputRef}
+              size="lg"
+              className="mx-auto max-w-xl"
+            />
+          </div>
         </div>
       </div>
 
       <div className="mx-auto max-w-7xl px-4 pb-10 sm:px-6">
         <div className="flex flex-col gap-10 sm:flex-row sm:items-start sm:justify-between">
-          <div>
+          <div id="about" className="scroll-mt-24">
             <p className={`text-xl font-bold text-zinc-900 ${HEADING_FONT}`}>PillTwin</p>
             <p className="mt-1 max-w-xs text-sm text-zinc-600">{t(lang, "footerDescription")}</p>
           </div>
@@ -86,9 +83,12 @@ export default function Footer({ lang, onChangeLanguage, query, setQuery, onSear
           </nav>
         </div>
 
-        <div className="mt-10 flex items-start gap-3 rounded-2xl bg-teal-50 p-5">
-          <ShieldIcon className="mt-0.5 h-6 w-6 shrink-0 text-teal-700" />
-          <p className="text-base leading-relaxed text-teal-900">{t(lang, "footerSafetyNote")}</p>
+        <div
+          style={{ backgroundColor: SAFETY_COLOR.bg, color: SAFETY_COLOR.text }}
+          className="mt-10 flex items-start gap-3 rounded-2xl p-5"
+        >
+          <ShieldIcon className="mt-0.5 h-6 w-6 shrink-0" />
+          <p className="text-base leading-relaxed">{t(lang, "footerSafetyNote")}</p>
         </div>
       </div>
 
@@ -99,6 +99,9 @@ export default function Footer({ lang, onChangeLanguage, query, setQuery, onSear
             © {year} PillTwin. {t(lang, "footerRights")}
           </p>
         </div>
+        <p className="px-4 pb-5 text-center text-xs text-zinc-400 sm:px-6">
+          Built by Shiza Fatima and Fatima Muhammad for Hacktoberfest &apos;26
+        </p>
       </div>
 
       <p

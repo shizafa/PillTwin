@@ -68,18 +68,18 @@ export default function RegistrationBadge({ product, lang, scannedRegNo }) {
   const registered = hasRegNo && status === "active" && regNoMatchesScan;
   const notRegistered = hasRegNo && status && status !== "active" && regNoMatchesScan;
 
-  let tone = "bg-zinc-100 text-zinc-700 border-zinc-200";
+  let tone = "border-zinc-400 text-zinc-700";
   let Icon = InfoIcon;
   let label = t(lang, "badgeNotVerified");
   let explanation = t(lang, "badgeNotVerifiedExplain");
 
   if (registered) {
-    tone = "bg-teal-50 text-teal-800 border-teal-200";
+    tone = "border-teal-600 text-teal-700";
     Icon = CheckIcon;
     label = t(lang, "badgeRegistered");
     explanation = t(lang, "badgeRegisteredExplain");
   } else if (notRegistered) {
-    tone = "bg-red-50 text-red-700 border-red-200";
+    tone = "border-red-600 text-red-700";
     Icon = AlertIcon;
     label = t(lang, "badgeNotRegistered");
     explanation = t(lang, "badgeNotRegisteredExplain").replace("{status}", product.status);
@@ -89,11 +89,11 @@ export default function RegistrationBadge({ product, lang, scannedRegNo }) {
 
   return (
     <div className={`mt-3 ${BODY_FONT}`}>
-      <span className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-xs font-semibold ${tone}`}>
+      <span className={`inline-flex items-center gap-1.5 rounded-md border px-3 py-1 text-xs font-semibold ${tone}`}>
         <Icon className="h-3.5 w-3.5" />
         {label}
       </span>
-      <p className="mt-1.5 text-xs leading-relaxed text-zinc-500">
+      <p className="mt-1.5 text-xs leading-relaxed opacity-80">
         {explanation}
         <br />
         {sourceLabel(lang, product.source)}

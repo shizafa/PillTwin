@@ -1,12 +1,12 @@
-const TONES = {
-  neutral: "bg-zinc-100 text-zinc-600",
-  teal: "bg-teal-50 text-teal-800",
-  muted: "bg-zinc-50 text-zinc-400",
-};
-
-export default function Chip({ children, tone = "neutral" }) {
+// Border + inherited text color, no fill — adapts to whatever foreground
+// color the enclosing card sets, instead of a fixed palette.
+export default function Chip({ children, strong = false }) {
   return (
-    <span className={`inline-flex items-center rounded-full px-2.5 py-1 text-xs font-medium ${TONES[tone]}`}>
+    <span
+      className={`inline-flex items-center rounded-md border border-current px-2.5 py-1 text-xs ${
+        strong ? "font-semibold" : "font-medium"
+      }`}
+    >
       {children}
     </span>
   );

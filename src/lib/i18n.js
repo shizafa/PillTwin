@@ -10,6 +10,7 @@ const STRINGS = {
     navHowItWorks: "How it works",
     navAbout: "About",
     navMenu: "Menu",
+    switchLanguage: "Switch language",
 
     scanHeading: "Scan your medicine box",
     fileHint: "Choose a photo from your computer, or take one with your phone camera.",
@@ -68,6 +69,9 @@ const STRINGS = {
     savingsBadge: "Save Rs. {amount}",
     perUnit: "per unit",
     loadingResults: "Loading results…",
+    paginationPrev: "Previous",
+    paginationNext: "Next",
+    paginationPage: "Page {current} of {total}",
 
     brand: "Brand",
     generic: "Generic",
@@ -104,6 +108,7 @@ const STRINGS = {
     navHowItWorks: "یہ کیسے کام کرتا ہے",
     navAbout: "تعارف",
     navMenu: "مینیو",
+    switchLanguage: "زبان تبدیل کریں",
 
     scanHeading: "اپنی دوا کا ڈبہ اسکین کریں",
     fileHint: "اپنے کمپیوٹر سے تصویر منتخب کریں، یا فون کے کیمرے سے تصویر لیں۔",
@@ -159,6 +164,9 @@ const STRINGS = {
     savingsBadge: "Rs. {amount} کی بچت",
     perUnit: "فی یونٹ",
     loadingResults: "نتائج لوڈ ہو رہے ہیں…",
+    paginationPrev: "پچھلا",
+    paginationNext: "اگلا",
+    paginationPage: "صفحہ {current} از {total}",
 
     brand: "برانڈ",
     generic: "جنرک",

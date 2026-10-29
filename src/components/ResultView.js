@@ -1,3 +1,6 @@
+"use client";
+
+import { useState } from "react";
 import AlternativeCard from "./AlternativeCard";
 import SearchedMedicineCard from "./SearchedMedicineCard";
 import StickySearchBar from "./StickySearchBar";
@@ -8,6 +11,36 @@ import { BODY_FONT, HEADING_FONT } from "./resultsViewTheme";
 // RegistrationBadge on the medicine card itself, so they're not repeated
 // here as a second, more alarming banner.
 const BANNER_WARNING_CODES = new Set(["PRODUCT_NOT_FOUND", "LIVE_LOOKUP_UNAVAILABLE"]);
+
+const ALTERNATIVES_PAGE_SIZE = 5;
+
+function AlternativesPager({ lang, page, totalPages, onChange }) {
+  if (totalPages <= 1) return null;
+
+  return (
+    <div className="flex items-center justify-between pt-1">
+      <button
+        type="button"
+        onClick={() => onChange(page - 1)}
+        disabled={page <= 1}
+        className="rounded-full border border-zinc-200 px-4 py-2 text-sm font-medium text-zinc-700 disabled:cursor-not-allowed disabled:opacity-40"
+      >
+        {t(lang, "paginationPrev")}
+      </button>
+      <p className="text-sm text-zinc-500">
+        {t(lang, "paginationPage").replace("{current}", page).replace("{total}", totalPages)}
+      </p>
+      <button
+        type="button"
+        onClick={() => onChange(page + 1)}
+        disabled={page >= totalPages}
+        className="rounded-full border border-zinc-200 px-4 py-2 text-sm font-medium text-zinc-700 disabled:cursor-not-allowed disabled:opacity-40"
+      >
+        {t(lang, "paginationNext")}
+      </button>
+    </div>
+  );
+}
 
 function PackDetails({ pack, lang }) {
   const rows = [
@@ -44,6 +77,23 @@ export default function ResultView({ result, lang, query, setQuery, onSearch, bu
   const bannerWarnings = warnings.filter((warning) => BANNER_WARNING_CODES.has(warning.code));
   const anyPriceMissing = alternatives.some(
     (alternative) => alternative.mrp === null || alternative.mrp === undefined
+  );
+
+  // Reset to page 1 whenever a new search/scan hands us a new alternatives
+  // list, without a useEffect (React's recommended "adjust state during
+  // render" pattern for resetting state when a prop changes).
+  const [page, setPage] = useState(1);
+  const [lastAlternatives, setLastAlternatives] = useState(alternatives);
+  if (alternatives !== lastAlternatives) {
+    setLastAlternatives(alternatives);
+    setPage(1);
+  }
+
+  const totalPages = Math.max(1, Math.ceil(alternatives.length / ALTERNATIVES_PAGE_SIZE));
+  const currentPage = Math.min(page, totalPages);
+  const pagedAlternatives = alternatives.slice(
+    (currentPage - 1) * ALTERNATIVES_PAGE_SIZE,
+    currentPage * ALTERNATIVES_PAGE_SIZE
   );
 
   return (
@@ -90,7 +140,7 @@ export default function ResultView({ result, lang, query, setQuery, onSearch, bu
                   {anyPriceMissing ? (
                     <p className="text-sm text-zinc-500">{t(lang, "pricesHelperNote")}</p>
                   ) : null}
-                  {alternatives.map((alternative) => (
+                  {pagedAlternatives.map((alternative) => (
                     <AlternativeCard
                       key={alternative.id}
                       product={alternative}
@@ -98,6 +148,12 @@ export default function ResultView({ result, lang, query, setQuery, onSearch, bu
                       lang={lang}
                     />
                   ))}
+                  <AlternativesPager
+                    lang={lang}
+                    page={currentPage}
+                    totalPages={totalPages}
+                    onChange={setPage}
+                  />
                 </div>
               ) : (
                 <div className="rounded-2xl bg-zinc-50 p-5 text-sm text-zinc-600">

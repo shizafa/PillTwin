@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { motion, useTransform } from "framer-motion";
-import { mapRange } from "./howItWorksMotion";
+import { mapRange } from "./scrollMath";
 
 function easeInOut(t) {
   return t * t * (3 - 2 * t);
