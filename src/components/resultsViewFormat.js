@@ -13,8 +13,10 @@ export function formatPrice(product, lang) {
 // Savings are only shown when both prices are real numbers and the
 // alternative is actually cheaper — never inferred or estimated.
 export function savingsAmount(searchedProduct, alternative) {
-  const base = Number(searchedProduct?.mrp);
-  const candidate = Number(alternative?.mrp);
+  if (searchedProduct?.mrp === null || searchedProduct?.mrp === undefined) return null;
+  if (alternative?.mrp === null || alternative?.mrp === undefined) return null;
+  const base = Number(searchedProduct.mrp);
+  const candidate = Number(alternative.mrp);
   if (!Number.isFinite(base) || !Number.isFinite(candidate)) return null;
   const diff = Math.round(base - candidate);
   return diff > 0 ? diff : null;

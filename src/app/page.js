@@ -71,6 +71,7 @@ export default function Home() {
     setPreview(URL.createObjectURL(selected));
     setError("");
     setResult(null);
+    document.getElementById("top")?.scrollIntoView({ behavior: "smooth" });
   }
 
   async function handleSearch(event) {

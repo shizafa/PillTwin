@@ -1,5 +1,10 @@
 import { t } from "@/lib/i18n";
+import { cleanText } from "@/lib/saltKey";
 import { BODY_FONT } from "./resultsViewTheme";
+
+function cleanRegNo(value) {
+  return cleanText(value).toLowerCase();
+}
 
 function CheckIcon({ className }) {
   return (
@@ -47,16 +52,21 @@ function formatDate(lang, isoDate) {
 }
 
 // Three states, matched to how confident we actually are:
-// - registered: we have a reg no. and DRAP marks it Active.
+// - registered: we have a reg no. and DRAP marks it Active, AND (when the
+//   medicine came from a scan) that reg no. actually matches what's printed
+//   on the box — a product found via brand/generic fallback with its own,
+//   different reg no. never counts as "verified".
 // - notRegistered (red): DRAP explicitly lists a non-Active status — only
 //   shown when the data says so, never inferred.
 // - notVerified (neutral grey): we simply have no DRAP registration number
 //   to check against, which is not the same as DRAP rejecting it.
-export default function RegistrationBadge({ product, lang }) {
+export default function RegistrationBadge({ product, lang, scannedRegNo }) {
   const status = (product.status || "").trim().toLowerCase();
   const hasRegNo = Boolean(product.reg_no);
-  const registered = hasRegNo && status === "active";
-  const notRegistered = hasRegNo && status && status !== "active";
+  const regNoMatchesScan =
+    !scannedRegNo || cleanRegNo(product.reg_no) === cleanRegNo(scannedRegNo);
+  const registered = hasRegNo && status === "active" && regNoMatchesScan;
+  const notRegistered = hasRegNo && status && status !== "active" && regNoMatchesScan;
 
   let tone = "bg-zinc-100 text-zinc-700 border-zinc-200";
   let Icon = InfoIcon;

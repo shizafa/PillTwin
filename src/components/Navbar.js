@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { LANGUAGES, t } from "@/lib/i18n";
+import { BODY_FONT, HEADING_FONT } from "./resultsViewTheme";
 
 export default function Navbar({ lang, onChangeLanguage }) {
   const [scrolled, setScrolled] = useState(false);
@@ -18,14 +19,14 @@ export default function Navbar({ lang, onChangeLanguage }) {
 
   return (
     <header
-      className={`fixed inset-x-0 top-0 z-50 transition-all ${
+      className={`fixed inset-x-0 top-0 z-50 transition-all ${BODY_FONT} ${
         scrolled
           ? "bg-white/80 shadow-sm backdrop-blur-md"
           : "bg-transparent"
       }`}
     >
-      <nav className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6">
-        <a href="#top" className="text-xl font-bold text-zinc-900">
+      <nav className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6">
+        <a href="#top" className={`text-xl font-bold text-zinc-900 ${HEADING_FONT}`}>
           PillTwin
         </a>
 

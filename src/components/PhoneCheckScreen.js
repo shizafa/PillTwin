@@ -36,7 +36,7 @@ export default function PhoneCheckScreen({ lang, scrollYProgress, stepIndex = 0,
   return (
     <div className="flex h-full w-full flex-col items-center justify-center bg-zinc-50 px-5 text-center">
       <p className="text-xs font-semibold uppercase tracking-wide text-zinc-400">{t(lang, "yourMedicine")}</p>
-      <p className="mt-1 text-lg font-bold text-zinc-900">Panadol</p>
+      <p className="mt-1 text-lg font-bold text-zinc-900">Brand A</p>
 
       <motion.div style={{ opacity: shieldOpacity, scale: shieldScale }} className="mt-6 text-teal-600">
         <ShieldCheckIcon className="h-16 w-16" />

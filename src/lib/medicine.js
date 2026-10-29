@@ -113,7 +113,7 @@ export function buildWarnings({ product, regNo, liveLookupUnavailable = false } 
     });
   }
 
-  if (regNo && !product?.reg_no) {
+  if (regNo && cleanText(product?.reg_no).toLowerCase() !== cleanText(regNo).toLowerCase()) {
     warnings.push({
       code: "REGISTRATION_NOT_FOUND",
       message: `Registration number ${cleanText(regNo)} was not found in DRAP's registry. Please verify this pack with your pharmacist.`,

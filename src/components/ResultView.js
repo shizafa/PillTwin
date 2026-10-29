@@ -76,7 +76,7 @@ export default function ResultView({ result, lang, query, setQuery, onSearch, bu
               <h2 className={`mb-3 text-sm font-semibold uppercase tracking-wide text-zinc-500 ${HEADING_FONT}`}>
                 {t(lang, "yourMedicine")}
               </h2>
-              <SearchedMedicineCard product={product} lang={lang} />
+              <SearchedMedicineCard product={product} lang={lang} scannedRegNo={pack?.reg_no} />
             </section>
 
             <section>

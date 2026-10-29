@@ -20,7 +20,7 @@ function compositionText(product) {
   return null;
 }
 
-export default function SearchedMedicineCard({ product, lang }) {
+export default function SearchedMedicineCard({ product, lang, scannedRegNo }) {
   const composition = compositionText(product);
   const price = formatPrice(product, lang);
 
@@ -57,7 +57,7 @@ export default function SearchedMedicineCard({ product, lang }) {
         </div>
       ) : null}
 
-      <RegistrationBadge product={product} lang={lang} />
+      <RegistrationBadge product={product} lang={lang} scannedRegNo={scannedRegNo} />
     </div>
   );
 }

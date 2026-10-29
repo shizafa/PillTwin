@@ -29,7 +29,7 @@ export default function Footer({ lang, onChangeLanguage, query, setQuery, onSear
 
   return (
     <footer className={`relative overflow-hidden bg-zinc-50 ${BODY_FONT}`}>
-      <div className="mx-auto flex max-w-6xl justify-end px-4 pt-6 sm:px-6">
+      <div className="mx-auto flex max-w-7xl justify-end px-4 pt-6 sm:px-6">
         <div className="flex overflow-hidden rounded-full border border-zinc-300 bg-white">
           {LANGUAGES.map((language) => (
             <button
@@ -63,7 +63,7 @@ export default function Footer({ lang, onChangeLanguage, query, setQuery, onSear
         </div>
       </div>
 
-      <div className="mx-auto max-w-6xl px-4 pb-10 sm:px-6">
+      <div className="mx-auto max-w-7xl px-4 pb-10 sm:px-6">
         <div className="flex flex-col gap-10 sm:flex-row sm:items-start sm:justify-between">
           <div>
             <p className={`text-xl font-bold text-zinc-900 ${HEADING_FONT}`}>PillTwin</p>
@@ -93,7 +93,7 @@ export default function Footer({ lang, onChangeLanguage, query, setQuery, onSear
       </div>
 
       <div className="border-t border-zinc-200">
-        <div className="mx-auto flex max-w-6xl flex-col gap-2 px-4 py-5 text-sm text-zinc-600 sm:flex-row sm:items-center sm:justify-between sm:px-6">
+        <div className="mx-auto flex max-w-7xl flex-col gap-2 px-4 py-5 text-sm text-zinc-600 sm:flex-row sm:items-center sm:justify-between sm:px-6">
           <p>{t(lang, "dataNote")}</p>
           <p>
             © {year} PillTwin. {t(lang, "footerRights")}

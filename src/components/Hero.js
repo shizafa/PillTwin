@@ -1,6 +1,7 @@
 "use client";
 
 import { t } from "@/lib/i18n";
+import { BODY_FONT, HEADING_FONT } from "./resultsViewTheme";
 
 function CameraIcon() {
   return (
@@ -33,8 +34,8 @@ export default function Hero({
   busy,
 }) {
   return (
-    <section className="relative isolate overflow-hidden bg-white">
-      <div className="relative mx-auto flex min-h-[520px] max-w-6xl flex-col px-4 pb-14 pt-32 sm:min-h-[680px] sm:px-6 sm:pb-20">
+    <section className={`relative isolate overflow-hidden bg-white ${BODY_FONT}`}>
+      <div className="relative mx-auto flex min-h-screen max-w-7xl flex-col px-4 pb-14 pt-32 sm:px-6 sm:pb-20">
         <video
           className="absolute inset-0 -z-10 h-full w-full object-cover motion-reduce:hidden"
           src="/video.mp4"
@@ -44,7 +45,7 @@ export default function Hero({
           playsInline
         />
 
-        <h1 className="relative z-10 max-w-xs text-balance text-start text-2xl font-bold text-zinc-900 sm:max-w-md sm:text-4xl">
+        <h1 className={`relative z-10 max-w-xs text-balance text-start text-2xl font-bold text-zinc-900 sm:max-w-md sm:text-4xl ${HEADING_FONT}`}>
           {t(lang, "tagline")}
         </h1>
 

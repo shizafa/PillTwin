@@ -2,15 +2,7 @@
 
 import Image from "next/image";
 import { motion, useTransform } from "framer-motion";
-
-function clamp01(v) {
-  return Math.min(1, Math.max(0, v));
-}
-
-function mapRange(v, inMin, inMax, outMin, outMax) {
-  const t = clamp01((v - inMin) / (inMax - inMin));
-  return outMin + t * (outMax - outMin);
-}
+import { mapRange } from "./howItWorksMotion";
 
 function easeInOut(t) {
   return t * t * (3 - 2 * t);
@@ -54,9 +46,7 @@ function frameAt(progress, cfg) {
   const rotate = finalScatter.rotate * scatterT;
   // Fully visible the instant the section pins — no fade-in delay, so there
   // is never a blank moment between the hero and the cards appearing.
-  const opacity = 1;
-
-  return { x, y, rotate, scale, opacity: clamp01(opacity) };
+  return { x, y, rotate, scale, opacity: 1 };
 }
 
 export default function OrbitCard({ card, index, total, scrollYProgress }) {

@@ -48,7 +48,7 @@ export default function PhoneResultsScreen({ lang, scrollYProgress, stepIndex = 
       <div className="rounded-xl bg-white p-3 shadow-sm">
         <div className="flex items-start justify-between gap-2">
           <div>
-            <p className="text-sm font-bold text-zinc-900">Panadol</p>
+            <p className="text-sm font-bold text-zinc-900">Brand A</p>
             <div className="mt-1">
               <IngredientChip>{COMPOSITION}</IngredientChip>
             </div>
@@ -70,7 +70,7 @@ export default function PhoneResultsScreen({ lang, scrollYProgress, stepIndex = 
         <div className="rounded-xl bg-white p-3 shadow-sm">
           <div className="flex items-start justify-between gap-2">
             <div>
-              <p className="text-sm font-bold text-zinc-900">Febrol</p>
+              <p className="text-sm font-bold text-zinc-900">Brand B</p>
               <div className="mt-1 flex flex-wrap gap-1">
                 <IngredientChip>{COMPOSITION}</IngredientChip>
                 <SameSaltTag lang={lang} />
@@ -93,7 +93,7 @@ export default function PhoneResultsScreen({ lang, scrollYProgress, stepIndex = 
         <div className="rounded-xl bg-white p-3 shadow-sm">
           <div className="flex items-start justify-between gap-2">
             <div>
-              <p className="text-sm font-bold text-zinc-900">Provas</p>
+              <p className="text-sm font-bold text-zinc-900">Brand C</p>
               <div className="mt-1 flex flex-wrap gap-1">
                 <IngredientChip>{COMPOSITION}</IngredientChip>
                 <SameSaltTag lang={lang} />
