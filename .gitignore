@@ -40,6 +40,9 @@ yarn-error.log*
 # drap scraper debug output
 drap-probe.json
 
+# bulk data dumps (already imported into Supabase)
+*.db
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts
