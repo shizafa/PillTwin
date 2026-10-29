@@ -10,7 +10,18 @@ import { BODY_FONT, HEADING_FONT } from "./resultsViewTheme";
 // REGISTRATION_NOT_FOUND / STATUS_NOT_ACTIVE are now communicated calmly by
 // RegistrationBadge on the medicine card itself, so they're not repeated
 // here as a second, more alarming banner.
-const BANNER_WARNING_CODES = new Set(["PRODUCT_NOT_FOUND", "LIVE_LOOKUP_UNAVAILABLE"]);
+const BANNER_WARNING_CODES = new Set([
+  "PRODUCT_NOT_FOUND",
+  "LIVE_LOOKUP_UNAVAILABLE",
+  "EXPIRED",
+  "EXPIRING_SOON",
+]);
+
+const BANNER_TONE = {
+  EXPIRED: "bg-red-50 text-red-900",
+  EXPIRING_SOON: "bg-amber-50 text-amber-900",
+};
+const DEFAULT_BANNER_TONE = "bg-sky-50 text-sky-900";
 
 const ALTERNATIVES_PAGE_SIZE = 5;
 
@@ -113,7 +124,10 @@ export default function ResultView({ result, lang, query, setQuery, onSearch, bu
         {bannerWarnings.length > 0 ? (
           <div className="space-y-2">
             {bannerWarnings.map((warning) => (
-              <p key={warning.code} className="rounded-2xl bg-sky-50 p-4 text-sm text-sky-900">
+              <p
+                key={warning.code}
+                className={`rounded-2xl p-4 text-sm ${BANNER_TONE[warning.code] ?? DEFAULT_BANNER_TONE}`}
+              >
                 {warningText(lang, warning)}
               </p>
             ))}

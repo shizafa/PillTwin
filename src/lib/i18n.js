@@ -208,6 +208,10 @@ const WARNINGS = {
       `DRAP lists this medicine's registration as "${status}", not Active. Please verify with your pharmacist.`,
     LIVE_LOOKUP_UNAVAILABLE: () =>
       "Live DRAP lookup is unavailable right now, so these results come from our saved data only.",
+    EXPIRED: ({ expiry }) =>
+      `This pack's printed expiry date (${expiry}) has passed. Please do not use it — ask your pharmacist for a replacement.`,
+    EXPIRING_SOON: ({ expiry }) =>
+      `This pack is close to its printed expiry date (${expiry}). Please check the date before using it.`,
   },
   ur: {
     PRODUCT_NOT_FOUND: () =>
@@ -218,6 +222,10 @@ const WARNINGS = {
       `ڈریپ کے مطابق اس دوا کی رجسٹریشن کی حالت ”${status}“ ہے، ایکٹو نہیں۔ براہِ کرم اپنے فارماسسٹ سے تصدیق کریں۔`,
     LIVE_LOOKUP_UNAVAILABLE: () =>
       "ڈریپ سے براہِ راست معلومات اس وقت دستیاب نہیں، اس لیے یہ نتائج صرف ہمارے محفوظ ڈیٹا سے ہیں۔",
+    EXPIRED: ({ expiry }) =>
+      `اس پیک کی میعاد ختم ہونے کی تاریخ (${expiry}) گزر چکی ہے۔ براہِ کرم اسے استعمال نہ کریں — اپنے فارماسسٹ سے نیا پیک لیں۔`,
+    EXPIRING_SOON: ({ expiry }) =>
+      `اس پیک کی میعاد ختم ہونے کی تاریخ (${expiry}) قریب ہے۔ براہِ کرم استعمال سے پہلے تاریخ چیک کریں۔`,
   },
 };
 

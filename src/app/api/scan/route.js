@@ -49,7 +49,7 @@ export async function POST(request) {
 
     const product = await findProductFromPack(pack);
     const alternatives = product ? await findAlternatives(product) : [];
-    const warnings = buildWarnings({ product, regNo: pack.reg_no });
+    const warnings = buildWarnings({ product, regNo: pack.reg_no, expiry: pack.expiry });
 
     return Response.json({
       pack,
